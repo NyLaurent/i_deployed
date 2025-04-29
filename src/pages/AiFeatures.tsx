@@ -186,6 +186,7 @@ const AiFeatures = () => {
   );
   const [lastActivity, setLastActivity] = useState(Date.now());
   const [showEmergencyModal, setShowEmergencyModal] = useState(false);
+  const [showGoodHealthModal, setShowGoodHealthModal] = useState(false);
 
   const measurementTypes = {
     "heart-rate": {
@@ -219,18 +220,26 @@ const AiFeatures = () => {
   const handleAddMeasurement = () => {
     if (measurementValue) {
       const now = new Date();
+      const value = Number.parseInt(measurementValue);
       const time = now.toLocaleTimeString("en-US");
       setReadings([
         ...readings,
         {
           id: readings.length + 1,
           time,
-          value: Number.parseInt(measurementValue),
+          value,
           date: now.toISOString(),
           notes: "New measurement",
         },
       ]);
       setMeasurementValue("");
+
+      // Show good health modal if in range, otherwise let emergency logic handle
+      if (measurementType === "heart-rate" && value >= 60 && value <= 100) {
+        setShowGoodHealthModal(true);
+        setShowAlert(false);
+        setShowEmergencyModal(false);
+      }
     }
   };
 
@@ -487,7 +496,7 @@ const AiFeatures = () => {
     <TooltipProvider>
       <div className="flex-1 p-4 md:p-6 overflow-y-auto bg-gray-50">
         <AnimatePresence>
-          {(showAlert || showEmergencyModal) && (
+          {showGoodHealthModal ? (
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -500,81 +509,150 @@ const AiFeatures = () => {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.2 }}
-                className="bg-white rounded-xl shadow-2xl p-6 max-w-md w-full mx-4 relative"
+                className="bg-white rounded-xl shadow-2xl p-6 max-w-md w-full mx-4 relative flex flex-col items-center"
               >
                 <Button
                   variant="ghost"
                   size="icon"
                   className="absolute top-2 right-2 h-8 w-8"
-                  onClick={handleDismissAlert}
+                  onClick={() => setShowGoodHealthModal(false)}
                 >
                   <X className="h-4 w-4" />
                 </Button>
                 <div className="flex flex-col items-center space-y-4">
-                  <motion.div
-                    initial={{ scale: 1 }}
-                    animate={{
-                      scale: [1, 1.1, 1],
-                    }}
-                    transition={{
-                      duration: 1,
-                      repeat: Infinity,
-                      repeatType: "reverse",
-                    }}
-                    className="relative"
-                  >
-                    <Button
-                      variant="destructive"
-                      size="icon"
-                      className="h-20 w-20 rounded-full shadow-lg bg-red-600 hover:bg-red-700"
-                    >
-                      <AlertTriangle className="h-10 w-10" />
-                    </Button>
-                  </motion.div>
-
-                  <div className="text-center space-y-2">
-                    <h3 className="text-xl font-bold text-red-600">
-                      Emergency Alert
-                    </h3>
-                    <p className="text-gray-600 font-medium">{alertMessage}</p>
-                    <p className="text-sm text-gray-500">
-                      Please take immediate action or contact emergency
-                      services.
-                    </p>
+                  <div className="bg-emerald-100 rounded-full p-4">
+                    <Heart className="h-10 w-10 text-emerald-600" />
                   </div>
-
-                  <div className="w-full space-y-3">
-                    <h4 className="font-semibold text-gray-700">
-                      Nearby Hospitals:
-                    </h4>
-                    <div className="space-y-2">
-                      {nearbyHospitals.map((hospital) => (
-                        <div
-                          key={hospital.id}
-                          className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-200"
-                        >
-                          <div className="text-left">
-                            <div className="font-semibold">{hospital.name}</div>
-                            <div className="text-sm text-gray-500">
-                              {hospital.distance} away
-                            </div>
-                          </div>
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            className="flex items-center gap-2"
-                            onClick={() => callHospital(hospital.phone)}
-                          >
-                            <Phone className="h-4 w-4" />
-                            Call
-                          </Button>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
+                  <h3 className="text-2xl font-bold text-emerald-700 text-center">
+                    Great Job!
+                  </h3>
+                  <p className="text-emerald-700 text-center">
+                    Your heart rate is within the healthy range (60–100 bpm).
+                    <br />
+                    Keep up the good work maintaining your health!
+                  </p>
                 </div>
               </motion.div>
             </motion.div>
+          ) : (
+            (showAlert || showEmergencyModal) && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.8 }}
+                transition={{ duration: 0.3 }}
+                className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
+              >
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="bg-white rounded-xl shadow-2xl p-6 max-w-md w-full mx-4 relative"
+                >
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="absolute top-2 right-2 h-8 w-8"
+                    onClick={handleDismissAlert}
+                  >
+                    <X className="h-4 w-4" />
+                  </Button>
+                  <div className="flex flex-col items-center space-y-4">
+                    <motion.div
+                      initial={{ scale: 1 }}
+                      animate={{
+                        scale: [1, 1.1, 1],
+                      }}
+                      transition={{
+                        duration: 1,
+                        repeat: Infinity,
+                        repeatType: "reverse",
+                      }}
+                      className="relative"
+                    >
+                      <Button
+                        variant="destructive"
+                        size="icon"
+                        className="h-20 w-20 rounded-full shadow-lg bg-red-600 hover:bg-red-700"
+                      >
+                        <AlertTriangle className="h-10 w-10" />
+                      </Button>
+                    </motion.div>
+
+                    <div className="text-center space-y-2">
+                      <h3 className="text-xl font-bold text-red-600">
+                        Emergency Alert
+                      </h3>
+                      <p className="text-gray-600 font-medium">
+                        {alertMessage}
+                      </p>
+                      <p className="text-sm text-gray-500">
+                        Please take immediate action or contact emergency
+                        services.
+                      </p>
+                    </div>
+
+                    {(() => {
+                      // Only show if measurementType is heart-rate (you can expand for others)
+                      if (measurementType === "heart-rate") {
+                        const lastReading = readings[readings.length - 1];
+                        if (
+                          lastReading &&
+                          lastReading.value >= 60 &&
+                          lastReading.value <= 100
+                        ) {
+                          return (
+                            <div className="bg-emerald-50 border border-emerald-200 text-emerald-700 rounded-lg p-3 my-2 flex items-center gap-2">
+                              <span role="img" aria-label="celebrate">
+                                🎉
+                              </span>
+                              <span>
+                                Your heart rate is within the healthy range!
+                                Keep up the good work maintaining your health.
+                              </span>
+                            </div>
+                          );
+                        }
+                      }
+                      return null;
+                    })()}
+
+                    <div className="w-full space-y-3">
+                      <h4 className="font-semibold text-gray-700">
+                        Nearby Hospitals:
+                      </h4>
+                      <div className="space-y-2">
+                        {nearbyHospitals.map((hospital) => (
+                          <div
+                            key={hospital.id}
+                            className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-200"
+                          >
+                            <div className="text-left">
+                              <div className="font-semibold">
+                                {hospital.name}
+                              </div>
+                              <div className="text-sm text-gray-500">
+                                {hospital.distance} away
+                              </div>
+                            </div>
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              className="flex items-center gap-2"
+                              onClick={() => callHospital(hospital.phone)}
+                            >
+                              <Phone className="h-4 w-4" />
+                              Call
+                            </Button>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              </motion.div>
+            )
           )}
         </AnimatePresence>
         <div className="mx-auto max-w-7xl space-y-8">
