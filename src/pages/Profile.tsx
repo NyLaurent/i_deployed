@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
-import React, { useState } from "react"
-import { useNavigate } from "react-router-dom"
-import { useAuth } from "@/context/AuthContext"
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/context/AuthContext";
 import {
   Edit,
   ChevronRight,
@@ -28,23 +28,44 @@ import {
   Stethoscope,
   Bookmark,
   ChevronDown,
-} from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Badge } from "@/components/ui/badge"
-import { Separator } from "@/components/ui/separator"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
-import { Progress } from "@/components/ui/progress"
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardFooter,
+} from "@/components/ui/card";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Progress } from "@/components/ui/progress";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const Profile = () => {
-  const { isAuthenticated, user } = useAuth()
-  const navigate = useNavigate()
-  const [activeTab, setActiveTab] = useState("overview")
-  const [showQrCode, setShowQrCode] = useState(false)
+  const { isAuthenticated, user } = useAuth();
+  const navigate = useNavigate();
+  const [activeTab, setActiveTab] = useState("overview");
+  const [showQrCode, setShowQrCode] = useState(false);
 
   // Sample patient data
   const patientData = {
@@ -59,15 +80,17 @@ const Profile = () => {
     address: "123 Health Street, Medical City",
     phone: "(555) 123-4567",
     email: "jane.doe@example.com",
+    nationalId: "12345678901234",
     emergencyContact: "John Doe (Husband) - (555) 987-6543",
     insurance: "HealthPlus Insurance",
     policyNumber: "HP-12345678",
     primaryPhysician: "Dr. Sarah Johnson",
     allergies: ["Penicillin", "Peanuts"],
     chronicConditions: ["Asthma", "Hypertension"],
-    avatar: "https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=200&auto=format&fit=crop",
+    avatar:
+      "https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=200&auto=format&fit=crop",
     completeness: 85,
-  }
+  };
 
   // Sample medical history data
   const medicalHistory = [
@@ -116,7 +139,7 @@ const Profile = () => {
       icon: Shield,
       color: "purple",
     },
-  ]
+  ];
 
   // Sample upcoming appointments
   const upcomingAppointments = [
@@ -142,7 +165,7 @@ const Profile = () => {
       status: "pending",
       avatar: "/placeholder.svg?height=40&width=40",
     },
-  ]
+  ];
 
   // Sample health metrics
   const healthMetrics = [
@@ -186,34 +209,34 @@ const Profile = () => {
       trend: "stable",
       change: "0%",
     },
-  ]
+  ];
 
   // Function to get status color
   const getStatusColor = (status) => {
     switch (status) {
       case "normal":
-        return "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400"
+        return "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400";
       case "warning":
-        return "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400"
+        return "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400";
       case "critical":
-        return "bg-rose-100 text-rose-700 dark:bg-rose-900/30 dark:text-rose-400"
+        return "bg-rose-100 text-rose-700 dark:bg-rose-900/30 dark:text-rose-400";
       default:
-        return "bg-slate-100 text-slate-700 dark:bg-slate-900/30 dark:text-slate-400"
+        return "bg-slate-100 text-slate-700 dark:bg-slate-900/30 dark:text-slate-400";
     }
-  }
+  };
 
   // Function to get trend icon
   const getTrendIcon = (trend) => {
     switch (trend) {
       case "increasing":
-        return <div className="text-emerald-500 text-xs">↑ {trend}</div>
+        return <div className="text-emerald-500 text-xs">↑ {trend}</div>;
       case "decreasing":
-        return <div className="text-rose-500 text-xs">↓ {trend}</div>
+        return <div className="text-rose-500 text-xs">↓ {trend}</div>;
       case "stable":
       default:
-        return <div className="text-slate-500 text-xs">→ {trend}</div>
+        return <div className="text-slate-500 text-xs">→ {trend}</div>;
     }
-  }
+  };
 
   // Function to get appointment status badge
   const getAppointmentStatusBadge = (status) => {
@@ -223,27 +246,27 @@ const Profile = () => {
           <Badge className="bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400 hover:bg-emerald-200">
             Confirmed
           </Badge>
-        )
+        );
       case "pending":
         return (
           <Badge className="bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400 hover:bg-amber-200">
             Pending
           </Badge>
-        )
+        );
       case "cancelled":
         return (
           <Badge className="bg-rose-100 text-rose-700 dark:bg-rose-900/30 dark:text-rose-400 hover:bg-rose-200">
             Cancelled
           </Badge>
-        )
+        );
       default:
         return (
           <Badge className="bg-slate-100 text-slate-700 dark:bg-slate-900/30 dark:text-slate-400 hover:bg-slate-200">
             {status}
           </Badge>
-        )
+        );
     }
-  }
+  };
 
   return (
     <main className="bg-gray-50 dark:bg-slate-900 min-h-screen pb-12">
@@ -264,29 +287,48 @@ const Profile = () => {
               <div>
                 <div className="flex items-center gap-3">
                   <h1 className="text-3xl font-bold">{patientData.name}</h1>
-                  <Badge className="bg-primary/10 text-primary hover:bg-primary/20 border-none">Patient</Badge>
+                  <Badge className="bg-primary/10 text-primary hover:bg-primary/20 border-none">
+                    Patient
+                  </Badge>
                 </div>
                 <div className="flex flex-wrap gap-2 mt-2">
-                  <Badge variant="outline" className="bg-white/80 dark:bg-slate-800/80">
+                  <Badge
+                    variant="outline"
+                    className="bg-white/80 dark:bg-slate-800/80"
+                  >
                     {patientData.gender}
                   </Badge>
-                  <Badge variant="outline" className="bg-white/80 dark:bg-slate-800/80">
+                  <Badge
+                    variant="outline"
+                    className="bg-white/80 dark:bg-slate-800/80"
+                  >
                     {patientData.age} years
                   </Badge>
-                  <Badge variant="outline" className="bg-white/80 dark:bg-slate-800/80 flex items-center gap-1">
+                  <Badge
+                    variant="outline"
+                    className="bg-white/80 dark:bg-slate-800/80 flex items-center gap-1"
+                  >
                     <Droplet className="h-3 w-3 text-rose-500" />
                     {patientData.bloodType}
                   </Badge>
                 </div>
-                <div className="mt-3 text-sm text-muted-foreground">ID: {patientData.id}</div>
+                <div className="mt-3 text-sm text-muted-foreground">
+                  ID: {patientData.id}
+                </div>
               </div>
             </div>
             <div className="flex flex-wrap gap-2">
-              <Button variant="outline" className="gap-1 bg-white/80 dark:bg-slate-800/80">
+              <Button
+                variant="outline"
+                className="gap-1 bg-white/80 dark:bg-slate-800/80"
+              >
                 <QrCode className="h-4 w-4" />
                 <span className="hidden sm:inline">Show QR Code</span>
               </Button>
-              <Button variant="outline" className="gap-1 bg-white/80 dark:bg-slate-800/80">
+              <Button
+                variant="outline"
+                className="gap-1 bg-white/80 dark:bg-slate-800/80"
+              >
                 <Download className="h-4 w-4" />
                 <span className="hidden sm:inline">Export Data</span>
               </Button>
@@ -324,7 +366,11 @@ const Profile = () => {
 
       {/* Main Content */}
       <div className="container mx-auto px-4 py-6 max-w-7xl">
-        <Tabs defaultValue={activeTab} onValueChange={setActiveTab} className="w-full">
+        <Tabs
+          defaultValue={activeTab}
+          onValueChange={setActiveTab}
+          className="w-full"
+        >
           <div className="flex justify-between items-center mb-6">
             <TabsList className="bg-white dark:bg-slate-800 p-1 shadow-sm">
               <TabsTrigger
@@ -369,49 +415,73 @@ const Profile = () => {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <div className="space-y-4">
                       <div>
-                        <p className="text-sm font-medium text-muted-foreground">Full Name</p>
+                        <p className="text-sm font-medium text-muted-foreground">
+                          Full Name
+                        </p>
                         <p className="font-medium">{patientData.name}</p>
                       </div>
                       <div>
-                        <p className="text-sm font-medium text-muted-foreground">Date of Birth</p>
+                        <p className="text-sm font-medium text-muted-foreground">
+                          National ID
+                        </p>
+                        <p className="font-medium">{patientData.nationalId}</p>
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-muted-foreground">
+                          Date of Birth
+                        </p>
                         <p className="font-medium">
                           {patientData.dateOfBirth} ({patientData.age} years)
                         </p>
                       </div>
                       <div>
-                        <p className="text-sm font-medium text-muted-foreground">Gender</p>
+                        <p className="text-sm font-medium text-muted-foreground">
+                          Gender
+                        </p>
                         <p className="font-medium">{patientData.gender}</p>
                       </div>
                       <div>
-                        <p className="text-sm font-medium text-muted-foreground">Blood Type</p>
+                        <p className="text-sm font-medium text-muted-foreground">
+                          Blood Type
+                        </p>
                         <p className="font-medium">{patientData.bloodType}</p>
                       </div>
                     </div>
                     <div className="space-y-4">
                       <div>
-                        <p className="text-sm font-medium text-muted-foreground">Email</p>
+                        <p className="text-sm font-medium text-muted-foreground">
+                          Email
+                        </p>
                         <div className="flex items-center gap-2">
                           <Mail className="h-4 w-4 text-muted-foreground" />
                           <p className="font-medium">{patientData.email}</p>
                         </div>
                       </div>
                       <div>
-                        <p className="text-sm font-medium text-muted-foreground">Phone</p>
+                        <p className="text-sm font-medium text-muted-foreground">
+                          Phone
+                        </p>
                         <div className="flex items-center gap-2">
                           <Phone className="h-4 w-4 text-muted-foreground" />
                           <p className="font-medium">{patientData.phone}</p>
                         </div>
                       </div>
                       <div>
-                        <p className="text-sm font-medium text-muted-foreground">Address</p>
+                        <p className="text-sm font-medium text-muted-foreground">
+                          Address
+                        </p>
                         <div className="flex items-center gap-2">
                           <MapPin className="h-4 w-4 text-muted-foreground" />
                           <p className="font-medium">{patientData.address}</p>
                         </div>
                       </div>
                       <div>
-                        <p className="text-sm font-medium text-muted-foreground">Emergency Contact</p>
-                        <p className="font-medium">{patientData.emergencyContact}</p>
+                        <p className="text-sm font-medium text-muted-foreground">
+                          Emergency Contact
+                        </p>
+                        <p className="font-medium">
+                          {patientData.emergencyContact}
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -438,10 +508,18 @@ const Profile = () => {
                     Scan this code at your next appointment
                   </p>
                   <div className="flex gap-2 w-full">
-                    <Button variant="outline" size="sm" className="w-full gap-1">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="w-full gap-1"
+                    >
                       <Share2 className="h-3.5 w-3.5" /> Share
                     </Button>
-                    <Button variant="outline" size="sm" className="w-full gap-1">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="w-full gap-1"
+                    >
                       <Download className="h-3.5 w-3.5" /> Download
                     </Button>
                   </div>
@@ -456,7 +534,11 @@ const Profile = () => {
                       <Activity className="h-5 w-5 text-primary" />
                       Health Metrics
                     </CardTitle>
-                    <Button variant="ghost" size="sm" className="gap-1 text-primary">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="gap-1 text-primary"
+                    >
                       View All <ChevronRight className="h-4 w-4" />
                     </Button>
                   </div>
@@ -469,7 +551,11 @@ const Profile = () => {
                         className="flex items-center justify-between p-4 bg-white dark:bg-slate-800 rounded-lg border shadow-sm hover:shadow-md transition-shadow"
                       >
                         <div className="flex items-center gap-4">
-                          <div className={`p-3 rounded-full ${getStatusColor(metric.status)}`}>
+                          <div
+                            className={`p-3 rounded-full ${getStatusColor(
+                              metric.status
+                            )}`}
+                          >
                             {React.createElement(metric.icon, {
                               className: "h-5 w-5",
                             })}
@@ -477,14 +563,18 @@ const Profile = () => {
                           <div>
                             <p className="font-medium">{metric.name}</p>
                             <div className="flex items-center gap-2">
-                              <p className="text-sm text-muted-foreground">{metric.date}</p>
+                              <p className="text-sm text-muted-foreground">
+                                {metric.date}
+                              </p>
                               {getTrendIcon(metric.trend)}
                             </div>
                           </div>
                         </div>
                         <div className="text-right">
                           <p className="text-xl font-bold">{metric.value}</p>
-                          <p className="text-xs text-muted-foreground">{metric.change} from last</p>
+                          <p className="text-xs text-muted-foreground">
+                            {metric.change} from last
+                          </p>
                         </div>
                       </div>
                     ))}
@@ -520,15 +610,17 @@ const Profile = () => {
                     <div>
                       <p className="font-medium mb-2">Chronic Conditions</p>
                       <div className="flex flex-wrap gap-2">
-                        {patientData.chronicConditions.map((condition, index) => (
-                          <Badge
-                            key={index}
-                            variant="outline"
-                            className="bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-900/20 dark:text-amber-400 dark:border-amber-800"
-                          >
-                            {condition}
-                          </Badge>
-                        ))}
+                        {patientData.chronicConditions.map(
+                          (condition, index) => (
+                            <Badge
+                              key={index}
+                              variant="outline"
+                              className="bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-900/20 dark:text-amber-400 dark:border-amber-800"
+                            >
+                              {condition}
+                            </Badge>
+                          )
+                        )}
                       </div>
                     </div>
                     <Separator />
@@ -536,7 +628,9 @@ const Profile = () => {
                       <p className="font-medium mb-2">Insurance</p>
                       <div className="text-sm">
                         <p>{patientData.insurance}</p>
-                        <p className="text-muted-foreground">Policy: {patientData.policyNumber}</p>
+                        <p className="text-muted-foreground">
+                          Policy: {patientData.policyNumber}
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -588,11 +682,18 @@ const Profile = () => {
                                   {record.facility}
                                 </Badge>
                               </div>
-                              <p className="text-sm text-muted-foreground">{record.date}</p>
+                              <p className="text-sm text-muted-foreground">
+                                {record.date}
+                              </p>
                             </div>
                             <div className="flex items-center gap-2">
-                              <Button variant="ghost" size="sm" className="gap-1 text-primary">
-                                View Details <ChevronRight className="h-4 w-4" />
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                className="gap-1 text-primary"
+                              >
+                                View Details{" "}
+                                <ChevronRight className="h-4 w-4" />
                               </Button>
                             </div>
                           </div>
@@ -636,7 +737,10 @@ const Profile = () => {
                         >
                           <div className="flex items-center gap-4">
                             <Avatar className="h-12 w-12 border">
-                              <AvatarImage src={appointment.avatar} alt={appointment.doctor} />
+                              <AvatarImage
+                                src={appointment.avatar}
+                                alt={appointment.doctor}
+                              />
                               <AvatarFallback>
                                 {appointment.doctor
                                   .split(" ")
@@ -646,30 +750,44 @@ const Profile = () => {
                             </Avatar>
                             <div>
                               <div className="flex items-center gap-2">
-                                <h3 className="font-semibold">{appointment.type}</h3>
+                                <h3 className="font-semibold">
+                                  {appointment.type}
+                                </h3>
                                 {getAppointmentStatusBadge(appointment.status)}
                               </div>
-                              <p className="font-medium">{appointment.doctor}</p>
-                              <p className="text-sm text-muted-foreground">{appointment.specialty}</p>
+                              <p className="font-medium">
+                                {appointment.doctor}
+                              </p>
+                              <p className="text-sm text-muted-foreground">
+                                {appointment.specialty}
+                              </p>
                             </div>
                           </div>
                           <div className="md:ml-auto flex flex-col md:flex-row items-start md:items-center gap-4">
                             <div className="text-right">
                               <div className="flex items-center gap-1 text-primary">
                                 <Calendar className="h-4 w-4" />
-                                <p className="font-medium">{appointment.date}</p>
+                                <p className="font-medium">
+                                  {appointment.date}
+                                </p>
                               </div>
                               <div className="flex items-center gap-1 text-muted-foreground">
                                 <Clock className="h-4 w-4" />
                                 <p>{appointment.time}</p>
                               </div>
-                              <p className="text-sm text-muted-foreground">{appointment.facility}</p>
+                              <p className="text-sm text-muted-foreground">
+                                {appointment.facility}
+                              </p>
                             </div>
                             <div className="flex gap-2">
                               <TooltipProvider>
                                 <Tooltip>
                                   <TooltipTrigger asChild>
-                                    <Button variant="outline" size="icon" className="h-8 w-8">
+                                    <Button
+                                      variant="outline"
+                                      size="icon"
+                                      className="h-8 w-8"
+                                    >
                                       <Bookmark className="h-4 w-4" />
                                     </Button>
                                   </TooltipTrigger>
@@ -680,14 +798,22 @@ const Profile = () => {
                               </TooltipProvider>
                               <DropdownMenu>
                                 <DropdownMenuTrigger asChild>
-                                  <Button variant="outline" size="icon" className="h-8 w-8">
+                                  <Button
+                                    variant="outline"
+                                    size="icon"
+                                    className="h-8 w-8"
+                                  >
                                     <MoreHorizontal className="h-4 w-4" />
                                   </Button>
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent align="end">
-                                  <DropdownMenuItem>Reschedule</DropdownMenuItem>
+                                  <DropdownMenuItem>
+                                    Reschedule
+                                  </DropdownMenuItem>
                                   <DropdownMenuItem>Cancel</DropdownMenuItem>
-                                  <DropdownMenuItem>Add to Calendar</DropdownMenuItem>
+                                  <DropdownMenuItem>
+                                    Add to Calendar
+                                  </DropdownMenuItem>
                                 </DropdownMenuContent>
                               </DropdownMenu>
                               <Button size="sm">Check In</Button>
@@ -718,28 +844,43 @@ const Profile = () => {
                     <div className="p-4 bg-white dark:bg-slate-800 rounded-lg border">
                       <div className="flex justify-between items-center mb-2">
                         <Badge variant="outline">Completed</Badge>
-                        <p className="text-sm text-muted-foreground">May 10, 2023</p>
+                        <p className="text-sm text-muted-foreground">
+                          May 10, 2023
+                        </p>
                       </div>
                       <p className="font-medium">Annual Physical Examination</p>
-                      <p className="text-sm text-muted-foreground">Dr. Sarah Johnson</p>
+                      <p className="text-sm text-muted-foreground">
+                        Dr. Sarah Johnson
+                      </p>
                     </div>
                     <div className="p-4 bg-white dark:bg-slate-800 rounded-lg border">
                       <div className="flex justify-between items-center mb-2">
                         <Badge variant="outline">Completed</Badge>
-                        <p className="text-sm text-muted-foreground">Apr 15, 2023</p>
+                        <p className="text-sm text-muted-foreground">
+                          Apr 15, 2023
+                        </p>
                       </div>
                       <p className="font-medium">Dental Checkup</p>
-                      <p className="text-sm text-muted-foreground">Dr. Robert Williams</p>
+                      <p className="text-sm text-muted-foreground">
+                        Dr. Robert Williams
+                      </p>
                     </div>
                     <div className="p-4 bg-white dark:bg-slate-800 rounded-lg border">
                       <div className="flex justify-between items-center mb-2">
-                        <Badge variant="outline" className="bg-rose-100 text-rose-700 border-rose-200">
+                        <Badge
+                          variant="outline"
+                          className="bg-rose-100 text-rose-700 border-rose-200"
+                        >
                           Cancelled
                         </Badge>
-                        <p className="text-sm text-muted-foreground">Mar 22, 2023</p>
+                        <p className="text-sm text-muted-foreground">
+                          Mar 22, 2023
+                        </p>
                       </div>
                       <p className="font-medium">Eye Examination</p>
-                      <p className="text-sm text-muted-foreground">Dr. Lisa Chen</p>
+                      <p className="text-sm text-muted-foreground">
+                        Dr. Lisa Chen
+                      </p>
                     </div>
                   </div>
                 </CardContent>
@@ -771,8 +912,8 @@ const Profile = () => {
                   </div>
                   <h3 className="text-lg font-medium mb-2">No documents yet</h3>
                   <p className="text-sm text-muted-foreground max-w-md">
-                    Upload your medical documents, test results, and prescriptions to keep them organized and
-                    accessible.
+                    Upload your medical documents, test results, and
+                    prescriptions to keep them organized and accessible.
                   </p>
                   <Button className="mt-6">Upload Your First Document</Button>
                 </div>
@@ -807,10 +948,10 @@ const Profile = () => {
         </DialogContent>
       </Dialog>
     </main>
-  )
-}
+  );
+};
 
-export default Profile
+export default Profile;
 
 function Plus(props) {
   return (
@@ -829,6 +970,5 @@ function Plus(props) {
       <path d="M5 12h14" />
       <path d="M12 5v14" />
     </svg>
-  )
+  );
 }
-

@@ -83,6 +83,7 @@ const DoctorProfile = () => {
     specialty: "Cardiology",
     subspecialty: "Interventional Cardiology",
     gender: "Female",
+    nationalId: "12345678901234",
     languages: ["English", "Spanish", "French"],
     experience: "15 years",
     address: "456 Medical Center Blvd, Healthcare City",
@@ -334,7 +335,7 @@ const DoctorProfile = () => {
         <path d="M5 12h14" />
         <path d="M12 5v14" />
       </svg>
-    )
+    );
   }
 
   return (
@@ -493,6 +494,12 @@ const DoctorProfile = () => {
                         <p className="font-medium">
                           {doctorData.name}, {doctorData.title}
                         </p>
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-muted-foreground">
+                          National ID
+                        </p>
+                        <p className="font-medium">{doctorData.nationalId}</p>
                       </div>
                       <div>
                         <p className="text-sm font-medium text-muted-foreground">
