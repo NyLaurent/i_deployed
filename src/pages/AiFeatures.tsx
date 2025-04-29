@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect } from "react";
 import {
   LineChart,
   Line,
@@ -14,7 +14,7 @@ import {
   BarChart,
   Bar,
   ReferenceLine,
-} from "recharts"
+} from "recharts";
 import {
   Activity,
   AlertCircle,
@@ -36,17 +36,36 @@ import {
   Send,
   Share2,
   TrendingUp,
-} from "lucide-react"
-import { motion, AnimatePresence } from "framer-motion"
+  Phone,
+  AlertTriangle,
+  MapPin,
+  X,
+} from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Avatar, AvatarFallback } from "@/components/ui/avatar"
-import { Badge } from "@/components/ui/badge"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import {
   Dialog,
   DialogContent,
@@ -54,35 +73,119 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
+} from "@/components/ui/dialog";
 
 const AiFeatures = () => {
-  const [measurementValue, setMeasurementValue] = useState("")
-  const [measurementType, setMeasurementType] = useState("heart-rate")
-  const [activeTab, setActiveTab] = useState("line")
-  const [searchTerm, setSearchTerm] = useState("")
-  const [activeFilter, setActiveFilter] = useState("all")
+  const [measurementValue, setMeasurementValue] = useState("");
+  const [measurementType, setMeasurementType] = useState("heart-rate");
+  const [activeTab, setActiveTab] = useState("line");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [activeFilter, setActiveFilter] = useState("all");
   const [readings, setReadings] = useState([
-    { id: 1, time: "6:14:58 PM", value: 72, date: "2023-03-21T18:14:58", notes: "At rest" },
-    { id: 2, time: "6:15:01 PM", value: 75, date: "2023-03-21T18:15:01", notes: "After standing" },
-    { id: 3, time: "6:15:04 PM", value: 79, date: "2023-03-21T18:15:04", notes: "Light activity" },
-    { id: 4, time: "6:15:07 PM", value: 74, date: "2023-03-21T18:15:07", notes: "Sitting down" },
-    { id: 5, time: "6:15:09 PM", value: 76, date: "2023-03-21T18:15:09", notes: "Reading" },
-    { id: 6, time: "6:15:12 PM", value: 73, date: "2023-03-21T18:15:12", notes: "Relaxed" },
-    { id: 7, time: "6:15:15 PM", value: 77, date: "2023-03-21T18:15:15", notes: "Watching TV" },
-    { id: 8, time: "6:15:18 PM", value: 80, date: "2023-03-21T18:15:18", notes: "After climbing stairs" },
-  ])
+    {
+      id: 1,
+      time: "6:14:58 PM",
+      value: 72,
+      date: "2023-03-21T18:14:58",
+      notes: "At rest",
+    },
+    {
+      id: 2,
+      time: "6:15:01 PM",
+      value: 75,
+      date: "2023-03-21T18:15:01",
+      notes: "After standing",
+    },
+    {
+      id: 3,
+      time: "6:15:04 PM",
+      value: 79,
+      date: "2023-03-21T18:15:04",
+      notes: "Light activity",
+    },
+    {
+      id: 4,
+      time: "6:15:07 PM",
+      value: 74,
+      date: "2023-03-21T18:15:07",
+      notes: "Sitting down",
+    },
+    {
+      id: 5,
+      time: "6:15:09 PM",
+      value: 76,
+      date: "2023-03-21T18:15:09",
+      notes: "Reading",
+    },
+    {
+      id: 6,
+      time: "6:15:12 PM",
+      value: 73,
+      date: "2023-03-21T18:15:12",
+      notes: "Relaxed",
+    },
+    {
+      id: 7,
+      time: "6:15:15 PM",
+      value: 77,
+      date: "2023-03-21T18:15:15",
+      notes: "Watching TV",
+    },
+    {
+      id: 8,
+      time: "6:15:18 PM",
+      value: 80,
+      date: "2023-03-21T18:15:18",
+      notes: "After climbing stairs",
+    },
+  ]);
   const [messages, setMessages] = useState([
     {
       id: 1,
       sender: "ai",
-      content: "Hello! I can provide information about various health conditions. What would you like to know about?",
+      content:
+        "Hello! I can provide information about various health conditions. What would you like to know about?",
       timestamp: new Date().toISOString(),
     },
-  ])
-  const [messageInput, setMessageInput] = useState("")
-  const [isTyping, setIsTyping] = useState(false)
-  const [selectedReading, setSelectedReading] = useState(null)
+  ]);
+  const [messageInput, setMessageInput] = useState("");
+  const [isTyping, setIsTyping] = useState(false);
+  const [selectedReading, setSelectedReading] = useState(null);
+  const [showAlert, setShowAlert] = useState(false);
+  const [showHospitalOptions, setShowHospitalOptions] = useState(false);
+  const [nearbyHospitals] = useState([
+    {
+      id: 1,
+      name: "City General Hospital",
+      distance: "2.5 km",
+      phone: "+1 (555) 123-4567",
+      address: "123 Medical Center Dr",
+      emergency: true,
+    },
+    {
+      id: 2,
+      name: "St. Mary's Medical Center",
+      distance: "3.8 km",
+      phone: "+1 (555) 234-5678",
+      address: "456 Health Ave",
+      emergency: true,
+    },
+    {
+      id: 3,
+      name: "Community Health Center",
+      distance: "5.2 km",
+      phone: "+1 (555) 345-6789",
+      address: "789 Wellness St",
+      emergency: true,
+    },
+  ]);
+  const [alertMessage, setAlertMessage] = useState("");
+  const [alertDismissed, setAlertDismissed] = useState(false);
+  const [lastCriticalValue, setLastCriticalValue] = useState<number | null>(
+    null
+  );
+  const [lastActivity, setLastActivity] = useState(Date.now());
+  const [showEmergencyModal, setShowEmergencyModal] = useState(false);
 
   const measurementTypes = {
     "heart-rate": {
@@ -109,14 +212,14 @@ const AiFeatures = () => {
       normalRange: "70-99",
       chartColor: "#10b981",
     },
-  }
+  };
 
-  const currentType = measurementTypes[measurementType]
+  const currentType = measurementTypes[measurementType];
 
   const handleAddMeasurement = () => {
     if (measurementValue) {
-      const now = new Date()
-      const time = now.toLocaleTimeString("en-US")
+      const now = new Date();
+      const time = now.toLocaleTimeString("en-US");
       setReadings([
         ...readings,
         {
@@ -126,10 +229,10 @@ const AiFeatures = () => {
           date: now.toISOString(),
           notes: "New measurement",
         },
-      ])
-      setMeasurementValue("")
+      ]);
+      setMeasurementValue("");
     }
-  }
+  };
 
   const handleSendMessage = () => {
     if (messageInput.trim()) {
@@ -138,11 +241,11 @@ const AiFeatures = () => {
         sender: "user",
         content: messageInput,
         timestamp: new Date().toISOString(),
-      }
+      };
 
-      setMessages([...messages, userMessage])
-      setMessageInput("")
-      setIsTyping(true)
+      setMessages([...messages, userMessage]);
+      setMessageInput("");
+      setIsTyping(true);
 
       // Simulate AI response
       setTimeout(() => {
@@ -151,60 +254,65 @@ const AiFeatures = () => {
           sender: "ai",
           content: getAIResponse(messageInput),
           timestamp: new Date().toISOString(),
-        }
-        setMessages((prev) => [...prev, aiResponse])
-        setIsTyping(false)
-      }, 1500)
+        };
+        setMessages((prev) => [...prev, aiResponse]);
+        setIsTyping(false);
+      }, 1500);
     }
-  }
+  };
 
   const getAIResponse = (query) => {
-    const lowerQuery = query.toLowerCase()
+    const lowerQuery = query.toLowerCase();
 
     if (lowerQuery.includes("diabetes")) {
-      return "Diabetes is a chronic condition that affects how your body turns food into energy. There are three main types: Type 1, Type 2, and gestational diabetes. Symptoms may include increased thirst, frequent urination, hunger, fatigue, and blurred vision. Regular monitoring of blood glucose levels is important for management."
+      return "Diabetes is a chronic condition that affects how your body turns food into energy. There are three main types: Type 1, Type 2, and gestational diabetes. Symptoms may include increased thirst, frequent urination, hunger, fatigue, and blurred vision. Regular monitoring of blood glucose levels is important for management.";
     } else if (lowerQuery.includes("heart") || lowerQuery.includes("cardiac")) {
-      return "Heart disease refers to several types of heart conditions. The most common is coronary artery disease, which can lead to heart attack. Symptoms may include chest pain, shortness of breath, and fatigue. Risk factors include high blood pressure, high cholesterol, smoking, and family history."
+      return "Heart disease refers to several types of heart conditions. The most common is coronary artery disease, which can lead to heart attack. Symptoms may include chest pain, shortness of breath, and fatigue. Risk factors include high blood pressure, high cholesterol, smoking, and family history.";
     } else if (lowerQuery.includes("cough") || lowerQuery.includes("cold")) {
-      return "Coughs can be caused by various conditions including the common cold, flu, allergies, or more serious conditions like pneumonia. If a cough persists for more than two weeks, is accompanied by fever, or produces discolored mucus, it's advisable to consult a healthcare professional."
+      return "Coughs can be caused by various conditions including the common cold, flu, allergies, or more serious conditions like pneumonia. If a cough persists for more than two weeks, is accompanied by fever, or produces discolored mucus, it's advisable to consult a healthcare professional.";
     } else if (lowerQuery.includes("cancer")) {
-      return "Cancer is a disease in which some of the body's cells grow uncontrollably and spread to other parts of the body. There are many types of cancer, and early detection is key to successful treatment. Regular screenings and awareness of warning signs are important preventive measures."
+      return "Cancer is a disease in which some of the body's cells grow uncontrollably and spread to other parts of the body. There are many types of cancer, and early detection is key to successful treatment. Regular screenings and awareness of warning signs are important preventive measures.";
     } else {
-      return "I don't have specific information about that condition. For accurate medical advice, please consult with a healthcare professional."
+      return "I don't have specific information about that condition. For accurate medical advice, please consult with a healthcare professional.";
     }
-  }
+  };
 
   const getValueTrend = () => {
-    if (readings.length < 2) return null
+    if (readings.length < 2) return null;
 
-    const lastValue = readings[readings.length - 1].value
-    const previousValue = readings[readings.length - 2].value
+    const lastValue = readings[readings.length - 1].value;
+    const previousValue = readings[readings.length - 2].value;
 
     if (lastValue > previousValue) {
-      return { direction: "up", difference: lastValue - previousValue }
+      return { direction: "up", difference: lastValue - previousValue };
     } else if (lastValue < previousValue) {
-      return { direction: "down", difference: previousValue - lastValue }
+      return { direction: "down", difference: previousValue - lastValue };
     } else {
-      return { direction: "same", difference: 0 }
+      return { direction: "same", difference: 0 };
     }
-  }
+  };
 
-  const trend = getValueTrend()
+  const trend = getValueTrend();
 
   const getTrendColor = () => {
-    if (!trend) return "text-gray-500"
+    if (!trend) return "text-gray-500";
 
     if (measurementType === "heart-rate") {
-      if (trend.direction === "up" && readings[readings.length - 1].value > 100) return "text-red-500"
-      if (trend.direction === "down" && readings[readings.length - 1].value < 60) return "text-red-500"
+      if (trend.direction === "up" && readings[readings.length - 1].value > 100)
+        return "text-red-500";
+      if (
+        trend.direction === "down" &&
+        readings[readings.length - 1].value < 60
+      )
+        return "text-red-500";
     }
 
     return trend.direction === "up"
       ? "text-emerald-500"
       : trend.direction === "down"
-        ? "text-blue-500"
-        : "text-gray-500"
-  }
+      ? "text-blue-500"
+      : "text-gray-500";
+  };
 
   const formatChartData = () => {
     return readings.map((reading, index) => ({
@@ -213,10 +321,10 @@ const AiFeatures = () => {
       time: reading.time,
       pv: index % 2 === 0 ? reading.value + 5 : reading.value - 5, // For area chart variation
       uv: reading.value, // For additional data series
-    }))
-  }
+    }));
+  };
 
-  const chartData = formatChartData()
+  const chartData = formatChartData();
 
   const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
@@ -225,53 +333,250 @@ const AiFeatures = () => {
           <p className="text-sm font-medium">{`Time: ${payload[0].payload.time}`}</p>
           <p className="text-sm text-gray-700">{`${currentType.label}: ${payload[0].value} ${currentType.unit}`}</p>
         </div>
-      )
+      );
     }
-    return null
-  }
+    return null;
+  };
 
-  const messageEndRef = React.useRef(null)
+  const messageEndRef = React.useRef(null);
 
   const scrollToBottom = () => {
-    messageEndRef.current?.scrollIntoView({ behavior: "smooth" })
-  }
+    messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
 
   useEffect(() => {
-    scrollToBottom()
-  }, [messages])
+    scrollToBottom();
+  }, [messages]);
 
   // Filter readings based on search term and active filter
   const filteredReadings = readings.filter((reading) => {
     const matchesSearch =
       reading.time.toLowerCase().includes(searchTerm.toLowerCase()) ||
       reading.notes.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      reading.value.toString().includes(searchTerm)
+      reading.value.toString().includes(searchTerm);
 
-    if (activeFilter === "all") return matchesSearch
+    if (activeFilter === "all") return matchesSearch;
     if (activeFilter === "high") {
       if (measurementType === "heart-rate") {
-        return matchesSearch && reading.value > 100
+        return matchesSearch && reading.value > 100;
       }
-      return matchesSearch
+      return matchesSearch;
     }
     if (activeFilter === "low") {
       if (measurementType === "heart-rate") {
-        return matchesSearch && reading.value < 60
+        return matchesSearch && reading.value < 60;
       }
-      return matchesSearch
+      return matchesSearch;
     }
     if (activeFilter === "normal") {
       if (measurementType === "heart-rate") {
-        return matchesSearch && reading.value >= 60 && reading.value <= 100
+        return matchesSearch && reading.value >= 60 && reading.value <= 100;
       }
-      return matchesSearch
+      return matchesSearch;
     }
-    return matchesSearch
-  })
+    return matchesSearch;
+  });
+
+  // Function to check if measurements are critical
+  const checkCriticalMeasurements = () => {
+    if (measurementType === "heart-rate") {
+      const lastReading = readings[readings.length - 1];
+      if (lastReading) {
+        const currentValue = lastReading.value;
+
+        // Show alert if:
+        // 1. The value is critical
+        // 2. It's a different value than the last critical value we showed
+        if (currentValue < 60 || currentValue > 100) {
+          if (currentValue !== lastCriticalValue) {
+            setLastCriticalValue(currentValue);
+            setAlertDismissed(false); // Reset dismissed state for new critical value
+            if (currentValue < 60) {
+              setAlertMessage(
+                "Critical Alert: Heart rate is dangerously low (below 60 bpm)"
+              );
+            } else {
+              setAlertMessage(
+                "Critical Alert: Heart rate is dangerously high (above 100 bpm)"
+              );
+            }
+            setShowAlert(true);
+            return true;
+          }
+        }
+      }
+    }
+    return false;
+  };
+
+  // Reset states when measurements return to normal
+  useEffect(() => {
+    if (measurementType === "heart-rate") {
+      const lastReading = readings[readings.length - 1];
+      if (lastReading && lastReading.value >= 60 && lastReading.value <= 100) {
+        setAlertDismissed(false);
+        setLastCriticalValue(null);
+      }
+    }
+  }, [readings, measurementType]);
+
+  // Function to handle alert dismissal
+  const handleDismissAlert = () => {
+    setShowAlert(false);
+    setShowHospitalOptions(false);
+    setAlertMessage("");
+    setAlertDismissed(true);
+    setLastCriticalValue(null);
+    // Reset any other modal-related states here
+  };
+
+  // Check measurements more frequently
+  useEffect(() => {
+    const interval = setInterval(() => {
+      checkCriticalMeasurements();
+    }, 1000); // Check every second
+
+    return () => clearInterval(interval);
+  }, [readings, measurementType]);
+
+  // Function to call hospital
+  const callHospital = (phone) => {
+    window.location.href = `tel:${phone}`;
+  };
+
+  // Reset activity timer on any user interaction
+  useEffect(() => {
+    const handleActivity = () => {
+      setLastActivity(Date.now());
+      setShowEmergencyModal(false);
+    };
+
+    window.addEventListener("mousemove", handleActivity);
+    window.addEventListener("keydown", handleActivity);
+    window.addEventListener("click", handleActivity);
+    window.addEventListener("scroll", handleActivity);
+
+    return () => {
+      window.removeEventListener("mousemove", handleActivity);
+      window.removeEventListener("keydown", handleActivity);
+      window.removeEventListener("click", handleActivity);
+      window.removeEventListener("scroll", handleActivity);
+    };
+  }, []);
+
+  // Check for inactivity every minute
+  useEffect(() => {
+    const checkInactivity = () => {
+      const now = Date.now();
+      const minutesSinceLastActivity = (now - lastActivity) / (1000 * 60);
+
+      if (minutesSinceLastActivity >= 3 && !showEmergencyModal) {
+        setShowEmergencyModal(true);
+        setAlertMessage(
+          "Emergency Alert: No activity detected for 3 minutes. Are you okay?"
+        );
+        setShowAlert(true);
+      }
+    };
+
+    const interval = setInterval(checkInactivity, 60000); // Check every minute
+    return () => clearInterval(interval);
+  }, [lastActivity, showEmergencyModal]);
 
   return (
     <TooltipProvider>
       <div className="flex-1 p-4 md:p-6 overflow-y-auto bg-gray-50">
+        <AnimatePresence>
+          {(showAlert || showEmergencyModal) && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.8 }}
+              transition={{ duration: 0.3 }}
+              className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
+            >
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                className="bg-white rounded-xl shadow-2xl p-6 max-w-md w-full mx-4 relative"
+              >
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="absolute top-2 right-2 h-8 w-8"
+                  onClick={handleDismissAlert}
+                >
+                  <X className="h-4 w-4" />
+                </Button>
+                <div className="flex flex-col items-center space-y-4">
+                  <motion.div
+                    initial={{ scale: 1 }}
+                    animate={{
+                      scale: [1, 1.1, 1],
+                    }}
+                    transition={{
+                      duration: 1,
+                      repeat: Infinity,
+                      repeatType: "reverse",
+                    }}
+                    className="relative"
+                  >
+                    <Button
+                      variant="destructive"
+                      size="icon"
+                      className="h-20 w-20 rounded-full shadow-lg bg-red-600 hover:bg-red-700"
+                    >
+                      <AlertTriangle className="h-10 w-10" />
+                    </Button>
+                  </motion.div>
+
+                  <div className="text-center space-y-2">
+                    <h3 className="text-xl font-bold text-red-600">
+                      Emergency Alert
+                    </h3>
+                    <p className="text-gray-600 font-medium">{alertMessage}</p>
+                    <p className="text-sm text-gray-500">
+                      Please take immediate action or contact emergency
+                      services.
+                    </p>
+                  </div>
+
+                  <div className="w-full space-y-3">
+                    <h4 className="font-semibold text-gray-700">
+                      Nearby Hospitals:
+                    </h4>
+                    <div className="space-y-2">
+                      {nearbyHospitals.map((hospital) => (
+                        <div
+                          key={hospital.id}
+                          className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-200"
+                        >
+                          <div className="text-left">
+                            <div className="font-semibold">{hospital.name}</div>
+                            <div className="text-sm text-gray-500">
+                              {hospital.distance} away
+                            </div>
+                          </div>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="flex items-center gap-2"
+                            onClick={() => callHospital(hospital.phone)}
+                          >
+                            <Phone className="h-4 w-4" />
+                            Call
+                          </Button>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
         <div className="mx-auto max-w-7xl space-y-8">
           <div className="bg-white rounded-xl border shadow-sm overflow-hidden">
             <div className="bg-gradient-to-r from-primary/10 via-primary/5 to-transparent p-6 md:p-8">
@@ -284,7 +589,8 @@ const AiFeatures = () => {
                     Health Monitoring
                   </h1>
                   <p className="text-muted-foreground max-w-2xl">
-                    Track your vital signs, analyze trends, and get AI-powered health insights
+                    Track your vital signs, analyze trends, and get AI-powered
+                    health insights
                   </p>
                 </div>
                 <div className="flex items-center gap-2">
@@ -350,21 +656,30 @@ const AiFeatures = () => {
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
                         <Button variant="outline" className="gap-1">
-                          <currentType.icon className="h-4 w-4 mr-1" style={{ color: currentType.color }} />
+                          <currentType.icon
+                            className="h-4 w-4 mr-1"
+                            style={{ color: currentType.color }}
+                          />
                           {currentType.label}
                           <ChevronDown className="h-4 w-4 ml-1" />
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
-                        <DropdownMenuItem onClick={() => setMeasurementType("heart-rate")}>
+                        <DropdownMenuItem
+                          onClick={() => setMeasurementType("heart-rate")}
+                        >
                           <Heart className="h-4 w-4 mr-2 text-red-500" />
                           Heart Rate
                         </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => setMeasurementType("blood-pressure")}>
+                        <DropdownMenuItem
+                          onClick={() => setMeasurementType("blood-pressure")}
+                        >
                           <Activity className="h-4 w-4 mr-2 text-blue-500" />
                           Blood Pressure
                         </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => setMeasurementType("blood-glucose")}>
+                        <DropdownMenuItem
+                          onClick={() => setMeasurementType("blood-glucose")}
+                        >
                           <TrendingUp className="h-4 w-4 mr-2 text-emerald-500" />
                           Blood Glucose
                         </DropdownMenuItem>
@@ -380,11 +695,15 @@ const AiFeatures = () => {
                         <div className="flex justify-between items-center">
                           <div>
                             <CardTitle className="text-xl font-semibold flex items-center gap-2">
-                              <currentType.icon className="h-5 w-5" style={{ color: currentType.color }} />
+                              <currentType.icon
+                                className="h-5 w-5"
+                                style={{ color: currentType.color }}
+                              />
                               {currentType.label} Monitoring
                             </CardTitle>
                             <CardDescription>
-                              Track and visualize your {currentType.label.toLowerCase()} measurements
+                              Track and visualize your{" "}
+                              {currentType.label.toLowerCase()} measurements
                             </CardDescription>
                           </div>
                           <div className="text-sm text-muted-foreground">
@@ -397,17 +716,31 @@ const AiFeatures = () => {
                       </CardHeader>
                       <CardContent>
                         <div className="mb-6">
-                          <Tabs defaultValue="line" value={activeTab} onValueChange={setActiveTab} className="w-full">
+                          <Tabs
+                            defaultValue="line"
+                            value={activeTab}
+                            onValueChange={setActiveTab}
+                            className="w-full"
+                          >
                             <TabsList className="mb-4 w-fit">
-                              <TabsTrigger value="line" className="flex items-center gap-1">
+                              <TabsTrigger
+                                value="line"
+                                className="flex items-center gap-1"
+                              >
                                 <LineChartIcon className="h-4 w-4" />
                                 Line
                               </TabsTrigger>
-                              <TabsTrigger value="area" className="flex items-center gap-1">
+                              <TabsTrigger
+                                value="area"
+                                className="flex items-center gap-1"
+                              >
                                 <Activity className="h-4 w-4" />
                                 Area
                               </TabsTrigger>
-                              <TabsTrigger value="bar" className="flex items-center gap-1">
+                              <TabsTrigger
+                                value="bar"
+                                className="flex items-center gap-1"
+                              >
                                 <BarChart2 className="h-4 w-4" />
                                 Bar
                               </TabsTrigger>
@@ -416,8 +749,19 @@ const AiFeatures = () => {
                             <TabsContent value="line" className="mt-0">
                               <div className="h-[300px] w-full bg-white rounded-lg p-4 border border-gray-100">
                                 <ResponsiveContainer width="100%" height="100%">
-                                  <LineChart data={chartData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-                                    <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+                                  <LineChart
+                                    data={chartData}
+                                    margin={{
+                                      top: 5,
+                                      right: 30,
+                                      left: 20,
+                                      bottom: 5,
+                                    }}
+                                  >
+                                    <CartesianGrid
+                                      strokeDasharray="3 3"
+                                      stroke="#f0f0f0"
+                                    />
                                     <XAxis
                                       dataKey="name"
                                       stroke="#888888"
@@ -425,20 +769,41 @@ const AiFeatures = () => {
                                       tickLine={false}
                                       axisLine={false}
                                     />
-                                    <YAxis stroke="#888888" fontSize={12} tickLine={false} axisLine={false} />
+                                    <YAxis
+                                      stroke="#888888"
+                                      fontSize={12}
+                                      tickLine={false}
+                                      axisLine={false}
+                                    />
                                     <Tooltip content={<CustomTooltip />} />
                                     <Line
                                       type="monotone"
                                       dataKey="value"
                                       stroke={currentType.chartColor}
                                       strokeWidth={2}
-                                      dot={{ r: 4, strokeWidth: 2, fill: "white" }}
-                                      activeDot={{ r: 6, strokeWidth: 0, fill: currentType.chartColor }}
+                                      dot={{
+                                        r: 4,
+                                        strokeWidth: 2,
+                                        fill: "white",
+                                      }}
+                                      activeDot={{
+                                        r: 6,
+                                        strokeWidth: 0,
+                                        fill: currentType.chartColor,
+                                      }}
                                     />
                                     {measurementType === "heart-rate" && (
                                       <>
-                                        <ReferenceLine y={60} stroke="#d1d5db" strokeDasharray="3 3" />
-                                        <ReferenceLine y={100} stroke="#d1d5db" strokeDasharray="3 3" />
+                                        <ReferenceLine
+                                          y={60}
+                                          stroke="#d1d5db"
+                                          strokeDasharray="3 3"
+                                        />
+                                        <ReferenceLine
+                                          y={100}
+                                          stroke="#d1d5db"
+                                          strokeDasharray="3 3"
+                                        />
                                       </>
                                     )}
                                   </LineChart>
@@ -449,8 +814,19 @@ const AiFeatures = () => {
                             <TabsContent value="area" className="mt-0">
                               <div className="h-[300px] w-full bg-white rounded-lg p-4 border border-gray-100">
                                 <ResponsiveContainer width="100%" height="100%">
-                                  <AreaChart data={chartData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-                                    <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+                                  <AreaChart
+                                    data={chartData}
+                                    margin={{
+                                      top: 5,
+                                      right: 30,
+                                      left: 20,
+                                      bottom: 5,
+                                    }}
+                                  >
+                                    <CartesianGrid
+                                      strokeDasharray="3 3"
+                                      stroke="#f0f0f0"
+                                    />
                                     <XAxis
                                       dataKey="name"
                                       stroke="#888888"
@@ -458,7 +834,12 @@ const AiFeatures = () => {
                                       tickLine={false}
                                       axisLine={false}
                                     />
-                                    <YAxis stroke="#888888" fontSize={12} tickLine={false} axisLine={false} />
+                                    <YAxis
+                                      stroke="#888888"
+                                      fontSize={12}
+                                      tickLine={false}
+                                      axisLine={false}
+                                    />
                                     <Tooltip content={<CustomTooltip />} />
                                     <Area
                                       type="monotone"
@@ -469,8 +850,16 @@ const AiFeatures = () => {
                                     />
                                     {measurementType === "heart-rate" && (
                                       <>
-                                        <ReferenceLine y={60} stroke="#d1d5db" strokeDasharray="3 3" />
-                                        <ReferenceLine y={100} stroke="#d1d5db" strokeDasharray="3 3" />
+                                        <ReferenceLine
+                                          y={60}
+                                          stroke="#d1d5db"
+                                          strokeDasharray="3 3"
+                                        />
+                                        <ReferenceLine
+                                          y={100}
+                                          stroke="#d1d5db"
+                                          strokeDasharray="3 3"
+                                        />
                                       </>
                                     )}
                                   </AreaChart>
@@ -481,8 +870,19 @@ const AiFeatures = () => {
                             <TabsContent value="bar" className="mt-0">
                               <div className="h-[300px] w-full bg-white rounded-lg p-4 border border-gray-100">
                                 <ResponsiveContainer width="100%" height="100%">
-                                  <BarChart data={chartData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-                                    <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+                                  <BarChart
+                                    data={chartData}
+                                    margin={{
+                                      top: 5,
+                                      right: 30,
+                                      left: 20,
+                                      bottom: 5,
+                                    }}
+                                  >
+                                    <CartesianGrid
+                                      strokeDasharray="3 3"
+                                      stroke="#f0f0f0"
+                                    />
                                     <XAxis
                                       dataKey="name"
                                       stroke="#888888"
@@ -490,13 +890,30 @@ const AiFeatures = () => {
                                       tickLine={false}
                                       axisLine={false}
                                     />
-                                    <YAxis stroke="#888888" fontSize={12} tickLine={false} axisLine={false} />
+                                    <YAxis
+                                      stroke="#888888"
+                                      fontSize={12}
+                                      tickLine={false}
+                                      axisLine={false}
+                                    />
                                     <Tooltip content={<CustomTooltip />} />
-                                    <Bar dataKey="value" fill={currentType.chartColor} radius={[4, 4, 0, 0]} />
+                                    <Bar
+                                      dataKey="value"
+                                      fill={currentType.chartColor}
+                                      radius={[4, 4, 0, 0]}
+                                    />
                                     {measurementType === "heart-rate" && (
                                       <>
-                                        <ReferenceLine y={60} stroke="#d1d5db" strokeDasharray="3 3" />
-                                        <ReferenceLine y={100} stroke="#d1d5db" strokeDasharray="3 3" />
+                                        <ReferenceLine
+                                          y={60}
+                                          stroke="#d1d5db"
+                                          strokeDasharray="3 3"
+                                        />
+                                        <ReferenceLine
+                                          y={100}
+                                          stroke="#d1d5db"
+                                          strokeDasharray="3 3"
+                                        />
                                       </>
                                     )}
                                   </BarChart>
@@ -513,7 +930,9 @@ const AiFeatures = () => {
                             </h3>
                             <div className="flex items-center gap-2">
                               {trend && (
-                                <div className={`flex items-center ${getTrendColor()}`}>
+                                <div
+                                  className={`flex items-center ${getTrendColor()}`}
+                                >
                                   {trend.direction === "up" ? (
                                     <ArrowUp className="h-4 w-4" />
                                   ) : trend.direction === "down" ? (
@@ -526,7 +945,8 @@ const AiFeatures = () => {
                               )}
                               <Badge variant="outline" className="font-normal">
                                 <Clock className="h-3 w-3 mr-1" />
-                                Last updated: {readings[readings.length - 1]?.time}
+                                Last updated:{" "}
+                                {readings[readings.length - 1]?.time}
                               </Badge>
                             </div>
                           </div>
@@ -544,21 +964,25 @@ const AiFeatures = () => {
                                 .reverse()
                                 .slice(0, 5)
                                 .map((reading) => {
-                                  let status = "Normal"
-                                  let statusColor = "bg-emerald-100 text-emerald-800"
+                                  let status = "Normal";
+                                  let statusColor =
+                                    "bg-emerald-100 text-emerald-800";
 
                                   if (measurementType === "heart-rate") {
                                     if (reading.value < 60) {
-                                      status = "Low"
-                                      statusColor = "bg-blue-100 text-blue-800"
+                                      status = "Low";
+                                      statusColor = "bg-blue-100 text-blue-800";
                                     } else if (reading.value > 100) {
-                                      status = "High"
-                                      statusColor = "bg-red-100 text-red-800"
+                                      status = "High";
+                                      statusColor = "bg-red-100 text-red-800";
                                     }
                                   }
 
                                   return (
-                                    <div key={reading.id} className="grid grid-cols-4 p-3 text-sm hover:bg-gray-50">
+                                    <div
+                                      key={reading.id}
+                                      className="grid grid-cols-4 p-3 text-sm hover:bg-gray-50"
+                                    >
                                       <div className="flex items-center">
                                         <Clock className="h-3 w-3 text-gray-400 mr-2" />
                                         {reading.time}
@@ -567,21 +991,25 @@ const AiFeatures = () => {
                                         {reading.value} {currentType.unit}
                                       </div>
                                       <div>
-                                        <Badge className={statusColor}>{status}</Badge>
+                                        <Badge className={statusColor}>
+                                          {status}
+                                        </Badge>
                                       </div>
                                       <div className="text-right">
                                         <Button
                                           variant="ghost"
                                           size="sm"
                                           className="h-8 gap-1"
-                                          onClick={() => setSelectedReading(reading)}
+                                          onClick={() =>
+                                            setSelectedReading(reading)
+                                          }
                                         >
                                           View
                                           <ChevronRight className="h-4 w-4" />
                                         </Button>
                                       </div>
                                     </div>
-                                  )
+                                  );
                                 })}
                             </div>
                           </div>
@@ -591,17 +1019,27 @@ const AiFeatures = () => {
 
                     <Card className="border-none shadow-sm">
                       <CardHeader>
-                        <CardTitle className="text-xl font-semibold">Add Measurement</CardTitle>
-                        <CardDescription>Record your {currentType.label.toLowerCase()} measurements</CardDescription>
+                        <CardTitle className="text-xl font-semibold">
+                          Add Measurement
+                        </CardTitle>
+                        <CardDescription>
+                          Record your {currentType.label.toLowerCase()}{" "}
+                          measurements
+                        </CardDescription>
                       </CardHeader>
                       <CardContent>
                         <div className="space-y-4">
                           <div className="space-y-2">
                             <div className="flex items-center justify-between">
-                              <label htmlFor="measurement" className="text-sm font-medium">
+                              <label
+                                htmlFor="measurement"
+                                className="text-sm font-medium"
+                              >
                                 {currentType.label} Value
                               </label>
-                              <span className="text-xs text-muted-foreground">Unit: {currentType.unit}</span>
+                              <span className="text-xs text-muted-foreground">
+                                Unit: {currentType.unit}
+                              </span>
                             </div>
                             <div className="relative">
                               <Input
@@ -609,7 +1047,9 @@ const AiFeatures = () => {
                                 type="number"
                                 placeholder={`Enter ${currentType.label.toLowerCase()} value`}
                                 value={measurementValue}
-                                onChange={(e) => setMeasurementValue(e.target.value)}
+                                onChange={(e) =>
+                                  setMeasurementValue(e.target.value)
+                                }
                                 className="pr-12"
                               />
                               <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-gray-400">
@@ -618,22 +1058,31 @@ const AiFeatures = () => {
                             </div>
                           </div>
 
-                          <Button className="w-full" onClick={handleAddMeasurement} disabled={!measurementValue}>
+                          <Button
+                            className="w-full"
+                            onClick={handleAddMeasurement}
+                            disabled={!measurementValue}
+                          >
                             <Plus className="h-4 w-4 mr-2" />
                             Add Measurement
                           </Button>
                         </div>
 
                         <div className="mt-6 pt-6 border-t">
-                          <h3 className="font-semibold mb-4">Health Insights</h3>
+                          <h3 className="font-semibold mb-4">
+                            Health Insights
+                          </h3>
                           <div className="space-y-3">
                             <div className="bg-blue-50 p-3 rounded-lg border border-blue-100">
                               <div className="flex items-start gap-2">
                                 <Info className="h-5 w-5 text-blue-500 mt-0.5" />
                                 <div>
-                                  <h4 className="font-medium text-blue-700">Measurement Trends</h4>
+                                  <h4 className="font-medium text-blue-700">
+                                    Measurement Trends
+                                  </h4>
                                   <p className="text-sm text-blue-600">
-                                    Your {currentType.label.toLowerCase()} has been relatively stable over the past 24
+                                    Your {currentType.label.toLowerCase()} has
+                                    been relatively stable over the past 24
                                     hours.
                                   </p>
                                 </div>
@@ -643,9 +1092,12 @@ const AiFeatures = () => {
                               <div className="flex items-start gap-2">
                                 <Activity className="h-5 w-5 text-emerald-500 mt-0.5" />
                                 <div>
-                                  <h4 className="font-medium text-emerald-700">Healthy Range</h4>
+                                  <h4 className="font-medium text-emerald-700">
+                                    Healthy Range
+                                  </h4>
                                   <p className="text-sm text-emerald-600">
-                                    Most of your readings are within the normal range of {currentType.normalRange}{" "}
+                                    Most of your readings are within the normal
+                                    range of {currentType.normalRange}{" "}
                                     {currentType.unit}.
                                   </p>
                                 </div>
@@ -665,7 +1117,10 @@ const AiFeatures = () => {
                         <MessageSquare className="h-5 w-5 text-primary" />
                         Health Assistant
                       </CardTitle>
-                      <CardDescription>Ask questions about health conditions and get AI-powered advice</CardDescription>
+                      <CardDescription>
+                        Ask questions about health conditions and get AI-powered
+                        advice
+                      </CardDescription>
                     </CardHeader>
                     <CardContent className="p-0">
                       <div className="flex flex-col h-[500px]">
@@ -678,22 +1133,42 @@ const AiFeatures = () => {
                                 animate={{ opacity: 1, y: 0 }}
                                 exit={{ opacity: 0 }}
                                 transition={{ duration: 0.3 }}
-                                className={`flex ${message.sender === "user" ? "justify-end" : "justify-start"}`}
+                                className={`flex ${
+                                  message.sender === "user"
+                                    ? "justify-end"
+                                    : "justify-start"
+                                }`}
                               >
                                 <div
-                                  className={`flex gap-2 max-w-[80%] ${message.sender === "user" ? "flex-row-reverse" : ""}`}
+                                  className={`flex gap-2 max-w-[80%] ${
+                                    message.sender === "user"
+                                      ? "flex-row-reverse"
+                                      : ""
+                                  }`}
                                 >
-                                  <Avatar className={message.sender === "user" ? "bg-primary" : "bg-muted"}>
-                                    <AvatarFallback>{message.sender === "user" ? "U" : "AI"}</AvatarFallback>
+                                  <Avatar
+                                    className={
+                                      message.sender === "user"
+                                        ? "bg-primary"
+                                        : "bg-muted"
+                                    }
+                                  >
+                                    <AvatarFallback>
+                                      {message.sender === "user" ? "U" : "AI"}
+                                    </AvatarFallback>
                                   </Avatar>
                                   <div
                                     className={`rounded-lg p-3 ${
-                                      message.sender === "user" ? "bg-primary text-primary-foreground" : "bg-muted"
+                                      message.sender === "user"
+                                        ? "bg-primary text-primary-foreground"
+                                        : "bg-muted"
                                     }`}
                                   >
                                     <p className="text-sm">{message.content}</p>
                                     <p className="text-xs opacity-70 mt-1">
-                                      {new Date(message.timestamp).toLocaleTimeString([], {
+                                      {new Date(
+                                        message.timestamp
+                                      ).toLocaleTimeString([], {
                                         hour: "2-digit",
                                         minute: "2-digit",
                                       })}
@@ -744,18 +1219,23 @@ const AiFeatures = () => {
                               onChange={(e) => setMessageInput(e.target.value)}
                               onKeyDown={(e) => {
                                 if (e.key === "Enter" && !e.shiftKey) {
-                                  e.preventDefault()
-                                  handleSendMessage()
+                                  e.preventDefault();
+                                  handleSendMessage();
                                 }
                               }}
                             />
-                            <Button size="icon" onClick={handleSendMessage} disabled={!messageInput.trim() || isTyping}>
+                            <Button
+                              size="icon"
+                              onClick={handleSendMessage}
+                              disabled={!messageInput.trim() || isTyping}
+                            >
                               <Send className="h-4 w-4" />
                             </Button>
                           </div>
                           <p className="text-xs text-muted-foreground mt-2">
                             <AlertCircle className="h-3 w-3 inline mr-1" />
-                            For educational purposes only. Consult a healthcare professional for medical advice.
+                            For educational purposes only. Consult a healthcare
+                            professional for medical advice.
                           </p>
                         </div>
                       </div>
@@ -772,7 +1252,9 @@ const AiFeatures = () => {
                             <Clock className="h-5 w-5 text-primary" />
                             Measurement History
                           </CardTitle>
-                          <CardDescription>View and filter your complete measurement history</CardDescription>
+                          <CardDescription>
+                            View and filter your complete measurement history
+                          </CardDescription>
                         </div>
                         <div className="flex flex-col md:flex-row gap-2">
                           <div className="relative">
@@ -795,25 +1277,33 @@ const AiFeatures = () => {
                             <DropdownMenuContent align="end">
                               <DropdownMenuItem
                                 onClick={() => setActiveFilter("all")}
-                                className={activeFilter === "all" ? "bg-accent" : ""}
+                                className={
+                                  activeFilter === "all" ? "bg-accent" : ""
+                                }
                               >
                                 All Readings
                               </DropdownMenuItem>
                               <DropdownMenuItem
                                 onClick={() => setActiveFilter("high")}
-                                className={activeFilter === "high" ? "bg-accent" : ""}
+                                className={
+                                  activeFilter === "high" ? "bg-accent" : ""
+                                }
                               >
                                 High Readings
                               </DropdownMenuItem>
                               <DropdownMenuItem
                                 onClick={() => setActiveFilter("normal")}
-                                className={activeFilter === "normal" ? "bg-accent" : ""}
+                                className={
+                                  activeFilter === "normal" ? "bg-accent" : ""
+                                }
                               >
                                 Normal Readings
                               </DropdownMenuItem>
                               <DropdownMenuItem
                                 onClick={() => setActiveFilter("low")}
-                                className={activeFilter === "low" ? "bg-accent" : ""}
+                                className={
+                                  activeFilter === "low" ? "bg-accent" : ""
+                                }
                               >
                                 Low Readings
                               </DropdownMenuItem>
@@ -826,16 +1316,16 @@ const AiFeatures = () => {
                       {filteredReadings.length > 0 ? (
                         <div className="space-y-4">
                           {filteredReadings.map((reading) => {
-                            let status = "Normal"
-                            let statusColor = "bg-emerald-100 text-emerald-800"
+                            let status = "Normal";
+                            let statusColor = "bg-emerald-100 text-emerald-800";
 
                             if (measurementType === "heart-rate") {
                               if (reading.value < 60) {
-                                status = "Low"
-                                statusColor = "bg-blue-100 text-blue-800"
+                                status = "Low";
+                                statusColor = "bg-blue-100 text-blue-800";
                               } else if (reading.value > 100) {
-                                status = "High"
-                                statusColor = "bg-red-100 text-red-800"
+                                status = "High";
+                                statusColor = "bg-red-100 text-red-800";
                               }
                             }
 
@@ -853,14 +1343,24 @@ const AiFeatures = () => {
                                       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
                                         <div>
                                           <div className="flex items-center gap-2 mb-1">
-                                            <h3 className="text-xl font-semibold">{currentType.label} Reading</h3>
-                                            <Badge variant="outline" className={statusColor}>
+                                            <h3 className="text-xl font-semibold">
+                                              {currentType.label} Reading
+                                            </h3>
+                                            <Badge
+                                              variant="outline"
+                                              className={statusColor}
+                                            >
                                               {status}
                                             </Badge>
                                           </div>
-                                          <p className="text-sm text-muted-foreground">Recorded on {reading.time}</p>
+                                          <p className="text-sm text-muted-foreground">
+                                            Recorded on {reading.time}
+                                          </p>
                                         </div>
-                                        <div className="text-3xl font-bold" style={{ color: currentType.color }}>
+                                        <div
+                                          className="text-3xl font-bold"
+                                          style={{ color: currentType.color }}
+                                        >
                                           {reading.value}{" "}
                                           <span className="text-base font-normal text-gray-500">
                                             {currentType.unit}
@@ -870,32 +1370,42 @@ const AiFeatures = () => {
 
                                       {reading.notes && (
                                         <div className="bg-muted/30 p-3 rounded-md border border-muted mb-4">
-                                          <p className="text-sm text-muted-foreground">{reading.notes}</p>
+                                          <p className="text-sm text-muted-foreground">
+                                            {reading.notes}
+                                          </p>
                                         </div>
                                       )}
 
                                       <div className="mt-4 flex justify-end gap-2">
                                         <Dialog>
                                           <DialogTrigger asChild>
-                                            <Button variant="outline">View Details</Button>
+                                            <Button variant="outline">
+                                              View Details
+                                            </Button>
                                           </DialogTrigger>
                                           <DialogContent className="max-w-2xl">
                                             <DialogHeader>
                                               <DialogTitle className="flex items-center gap-2">
                                                 <currentType.icon className="h-5 w-5" />
-                                                {currentType.label} Reading Details
+                                                {currentType.label} Reading
+                                                Details
                                               </DialogTitle>
                                               <DialogDescription>
-                                                Complete details about this measurement
+                                                Complete details about this
+                                                measurement
                                               </DialogDescription>
                                             </DialogHeader>
                                             <div className="grid gap-4 py-4">
                                               <div className="grid grid-cols-2 gap-4">
                                                 <div>
-                                                  <h4 className="text-sm font-medium mb-1">Reading Value</h4>
+                                                  <h4 className="text-sm font-medium mb-1">
+                                                    Reading Value
+                                                  </h4>
                                                   <p
                                                     className="text-2xl font-bold"
-                                                    style={{ color: currentType.color }}
+                                                    style={{
+                                                      color: currentType.color,
+                                                    }}
                                                   >
                                                     {reading.value}{" "}
                                                     <span className="text-sm font-normal text-gray-500">
@@ -904,22 +1414,40 @@ const AiFeatures = () => {
                                                   </p>
                                                 </div>
                                                 <div>
-                                                  <h4 className="text-sm font-medium mb-1">Status</h4>
-                                                  <Badge className={statusColor}>{status}</Badge>
+                                                  <h4 className="text-sm font-medium mb-1">
+                                                    Status
+                                                  </h4>
+                                                  <Badge
+                                                    className={statusColor}
+                                                  >
+                                                    {status}
+                                                  </Badge>
                                                 </div>
                                               </div>
                                               <div>
-                                                <h4 className="text-sm font-medium mb-1">Time Recorded</h4>
-                                                <p className="text-sm">{reading.time}</p>
-                                              </div>
-                                              <div>
-                                                <h4 className="text-sm font-medium mb-1">Notes</h4>
-                                                <p className="text-sm">{reading.notes || "No notes recorded"}</p>
-                                              </div>
-                                              <div>
-                                                <h4 className="text-sm font-medium mb-1">Normal Range</h4>
+                                                <h4 className="text-sm font-medium mb-1">
+                                                  Time Recorded
+                                                </h4>
                                                 <p className="text-sm">
-                                                  {currentType.normalRange} {currentType.unit}
+                                                  {reading.time}
+                                                </p>
+                                              </div>
+                                              <div>
+                                                <h4 className="text-sm font-medium mb-1">
+                                                  Notes
+                                                </h4>
+                                                <p className="text-sm">
+                                                  {reading.notes ||
+                                                    "No notes recorded"}
+                                                </p>
+                                              </div>
+                                              <div>
+                                                <h4 className="text-sm font-medium mb-1">
+                                                  Normal Range
+                                                </h4>
+                                                <p className="text-sm">
+                                                  {currentType.normalRange}{" "}
+                                                  {currentType.unit}
                                                 </p>
                                               </div>
                                             </div>
@@ -931,7 +1459,7 @@ const AiFeatures = () => {
                                   </div>
                                 </CardContent>
                               </Card>
-                            )
+                            );
                           })}
                         </div>
                       ) : (
@@ -940,10 +1468,13 @@ const AiFeatures = () => {
                             <div className="rounded-full bg-muted p-3 mb-4">
                               <Search className="h-6 w-6 text-muted-foreground" />
                             </div>
-                            <h3 className="text-lg font-medium mb-1">No readings found</h3>
+                            <h3 className="text-lg font-medium mb-1">
+                              No readings found
+                            </h3>
                             <p className="text-sm text-muted-foreground text-center max-w-md">
-                              We couldn't find any readings matching your search criteria. Try adjusting your filters or
-                              search terms.
+                              We couldn't find any readings matching your search
+                              criteria. Try adjusting your filters or search
+                              terms.
                             </p>
                           </CardContent>
                         </Card>
@@ -956,22 +1487,34 @@ const AiFeatures = () => {
           </div>
 
           {selectedReading && (
-            <Dialog open={!!selectedReading} onOpenChange={() => setSelectedReading(null)}>
+            <Dialog
+              open={!!selectedReading}
+              onOpenChange={() => setSelectedReading(null)}
+            >
               <DialogContent className="max-w-2xl">
                 <DialogHeader>
                   <DialogTitle className="flex items-center gap-2">
                     <currentType.icon className="h-5 w-5" />
                     {currentType.label} Reading Details
                   </DialogTitle>
-                  <DialogDescription>Complete details about this measurement</DialogDescription>
+                  <DialogDescription>
+                    Complete details about this measurement
+                  </DialogDescription>
                 </DialogHeader>
                 <div className="grid gap-4 py-4">
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <h4 className="text-sm font-medium mb-1">Reading Value</h4>
-                      <p className="text-2xl font-bold" style={{ color: currentType.color }}>
+                      <h4 className="text-sm font-medium mb-1">
+                        Reading Value
+                      </h4>
+                      <p
+                        className="text-2xl font-bold"
+                        style={{ color: currentType.color }}
+                      >
                         {selectedReading.value}{" "}
-                        <span className="text-sm font-normal text-gray-500">{currentType.unit}</span>
+                        <span className="text-sm font-normal text-gray-500">
+                          {currentType.unit}
+                        </span>
                       </p>
                     </div>
                     <div>
@@ -981,11 +1524,15 @@ const AiFeatures = () => {
                           selectedReading.value < 60
                             ? "bg-blue-100 text-blue-800"
                             : selectedReading.value > 100
-                              ? "bg-red-100 text-red-800"
-                              : "bg-emerald-100 text-emerald-800"
+                            ? "bg-red-100 text-red-800"
+                            : "bg-emerald-100 text-emerald-800"
                         }
                       >
-                        {selectedReading.value < 60 ? "Low" : selectedReading.value > 100 ? "High" : "Normal"}
+                        {selectedReading.value < 60
+                          ? "Low"
+                          : selectedReading.value > 100
+                          ? "High"
+                          : "Normal"}
                       </Badge>
                     </div>
                   </div>
@@ -995,7 +1542,9 @@ const AiFeatures = () => {
                   </div>
                   <div>
                     <h4 className="text-sm font-medium mb-1">Notes</h4>
-                    <p className="text-sm">{selectedReading.notes || "No notes recorded"}</p>
+                    <p className="text-sm">
+                      {selectedReading.notes || "No notes recorded"}
+                    </p>
                   </div>
                   <div>
                     <h4 className="text-sm font-medium mb-1">Normal Range</h4>
@@ -1007,11 +1556,53 @@ const AiFeatures = () => {
               </DialogContent>
             </Dialog>
           )}
+
+          {/* Add Nearby Hospitals Section */}
+          <Card className="border-none shadow-sm">
+            <CardHeader>
+              <CardTitle className="text-xl font-semibold flex items-center gap-2">
+                <MapPin className="h-5 w-5 text-primary" />
+                Nearby Hospitals
+              </CardTitle>
+              <CardDescription>
+                Emergency medical facilities in your vicinity
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="grid gap-4">
+                {nearbyHospitals.map((hospital) => (
+                  <Card key={hospital.id} className="border-none shadow-sm">
+                    <CardContent className="p-4">
+                      <div className="flex items-start justify-between">
+                        <div>
+                          <h3 className="font-semibold">{hospital.name}</h3>
+                          <p className="text-sm text-muted-foreground">
+                            {hospital.address}
+                          </p>
+                          <p className="text-sm text-muted-foreground">
+                            {hospital.distance} away
+                          </p>
+                        </div>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="flex items-center gap-2"
+                          onClick={() => callHospital(hospital.phone)}
+                        >
+                          <Phone className="h-4 w-4" />
+                          Call
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </div>
     </TooltipProvider>
-  )
-}
+  );
+};
 
-export default AiFeatures
-
+export default AiFeatures;
